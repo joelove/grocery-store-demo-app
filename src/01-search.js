@@ -1,16 +1,19 @@
-import _ from 'lodash'
-import products from './data/products.json'
+import axios from 'axios'
 
-// Simple string based search from products
 export function getProductSearchResults(userId, inputValue) {
-  // We could search from user's purchase history, but it was omitted in this demo
-  if (!inputValue) {
-    return []
-  }
-
-  const filteredProducts = _.filter(products, product => {
-    return product.name.toLowerCase().includes(inputValue.toLowerCase())
+  return axios.post('https://aito-grocery-store.api.aito.ai/api/v1/_search', {
+    from: 'products',
+    where: {
+      $or: [
+        { name: { $match: inputValue } },
+        { tags: { $match: inputValue } }
+      ]
+    },
+    limit: 5
+  }, {
+    headers: { 'x-api-key': process.env.API_KEY },
   })
-
-  return _.take(filteredProducts, 5)
+    .then(response => {
+      return response.data.hits
+    })
 }
