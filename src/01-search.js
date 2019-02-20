@@ -11,7 +11,7 @@ export function getProductSearchResults(userId, inputValue) {
     },
     limit: 5
   }, {
-    headers: { 'x-api-key': process.env.API_KEY },
+    headers: { 'x-api-key': process.env.REACT_APP_API_KEY },
   })
     .then(response => {
       return response.data.hits

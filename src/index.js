@@ -6,4 +6,3 @@ import './ui/styles/bootstrap.min.css'
 import './ui/index.css'
 
 ReactDOM.render(<App />, document.getElementById('root'))
-
